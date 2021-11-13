@@ -1,14 +1,13 @@
 import React from "react";
-import { Col } from "antd";
 import { getXYCoord } from "../solver/utility";
 
-const Tile = ({ value, pos }) => {
+const Tile = ({ boardSize, value, pos }) => {
   const squareLength = 80;
-  let [xPos, yPos] = getXYCoord(pos);
-  let left = `${xPos  * squareLength}px`;
-  let top = `${yPos  * squareLength}px`;
+  let [xPos, yPos] = getXYCoord(pos, boardSize);
+  let left = `${xPos * squareLength}px`;
+  let top = `${yPos * squareLength}px`;
   return (
-    value !== 15 && (
+    value !== boardSize * boardSize - 1 && (
       <div id={value} val={value} style={{ ...styles.tileStyle, left, top }}>
         {value}
       </div>
@@ -25,7 +24,7 @@ const styles = {
     lineHeight: squareLength,
     border: "1px solid black",
     color: "red",
-    transition: "all 0.5s ease-in-out",
+    transition: "all 0.2s ease-in-out",
     transitionProperty: "left, top",
     position: "absolute",
     backgroundColor: "#e0ffff",

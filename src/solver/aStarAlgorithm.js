@@ -1,34 +1,29 @@
 import {
-  getXYCoord,
   getMoveChoices,
   selectNeighbour,
   swapElement,
   moveReverse,
 } from "./utility";
-import { manhattanDist } from "./heuristics";
 import PriorityQueue from "js-priority-queue";
 import _ from "lodash";
-import { queryHelpers } from "@testing-library/dom";
 
 const aStarAlgorithm = (tiles, heuristic) => {
   const initialState = createState(tiles, heuristic, 0);
   const stateTree = {
     state: initialState,
     children: [],
-    parent: null
+    parent: null,
   };
-  const allNeighbour = getAllNeighbour(initialState, heuristic);
-  stateTree.children = _.map(allNeighbour, (state) => {
+  const allNeighbourState = getAllNeighbourState(initialState, heuristic);
+  stateTree.children = _.map(allNeighbourState, (state) => {
     return {
       state,
       children: [],
-      parent: stateTree
+      parent: stateTree,
     };
   });
-
-  //   heuristic(tiles);
   let stateQueue = new PriorityQueue({
-    initialValues: stateTree.children,
+    initialValues: [stateTree, ...stateTree.children],
     comparator: (a, b) =>
       a.state.noOfMoves +
       a.state.heuristicDist -
@@ -36,18 +31,26 @@ const aStarAlgorithm = (tiles, heuristic) => {
   });
   let count = 0;
   while (stateQueue.length) {
+    if (count > 2000000) {
+      console.log('Over 2000000 iteration, stop the algorithm')
+      return {
+        // state,
+        children: [],
+        parent: null,
+      };
+    }
     count++;
     let lowest = stateQueue.dequeue();
     if (lowest.state.heuristicDist === 0) {
-      console.log(count)
+      console.log(`Number of Iteration: ${count}`);
       return lowest;
     } else {
-      let newMoveStates = getAllNeighbour(lowest.state, heuristic);
+      let newMoveStates = getAllNeighbourState(lowest.state, heuristic);
       lowest.children = _.map(newMoveStates, (state) => {
         return {
           state,
           children: [],
-          parent: lowest
+          parent: lowest,
         };
       });
       _.forEach(lowest.children, (node) => stateQueue.queue(node));
@@ -64,22 +67,23 @@ const createState = (tiles, heuristic, noOfMoves, preDirection = null) => {
   };
 };
 
-const getAllNeighbour = (state, heuristic) => {
+const getAllNeighbourState = (state, heuristic) => {
   const { tiles, noOfMoves, preDirection } = state;
+  let boardSize = Math.sqrt(tiles.length);
   let emptyPos = 0;
   for (let i = 0; i < tiles.length; i++) {
-    if (tiles[i] === 15) {
+    if (tiles[i] === tiles.length - 1) {
       emptyPos = i;
+      break;
     }
   }
   let duplicatedMove = moveReverse(preDirection);
   let moveChoices = _.filter(
-    getMoveChoices(emptyPos),
+    getMoveChoices(emptyPos, boardSize),
     (move) => move !== duplicatedMove
   );
-
   return _.map(moveChoices, (direction) => {
-    const newPos = selectNeighbour(emptyPos, direction);
+    const newPos = selectNeighbour(emptyPos, direction, boardSize);
     const newTiles = swapElement(tiles, emptyPos, newPos);
     return createState(newTiles, heuristic, noOfMoves + 1, direction);
   });

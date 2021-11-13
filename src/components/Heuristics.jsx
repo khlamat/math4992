@@ -10,12 +10,15 @@ const Heuristics = ({ heuristic, setHeuristic }) => {
         <Select
           style={styles.selectStyle}
           value={heuristic}
-          onChange={(value) => {
+          onChange={(value,op) => {
             setHeuristic(value);
           }}
         >
           <Option value="manHattan">ManHattan distance</Option>
-          <Option value="custom">Custom</Option>
+          <Option value="linearConflict">Linear Conflict</Option>
+          <Option value="closureConflict">Closure Conflict</Option>
+          <Option value="mixConflict">Mix Conflict</Option>
+          <Option value="combineConflict">Combine Conflict</Option>
         </Select>
       </Row>
     </>
