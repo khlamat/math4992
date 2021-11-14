@@ -16,7 +16,7 @@ for(let i = 0; i < testCases.length; i++){
 
 const jsonContent = JSON.stringify(results);
 
-fs.writeFile(`./testCasess${boardSize}Results.json`, jsonContent, 'utf8', function (err) {
+fs.writeFile(`./testCases${boardSize}Results.json`, jsonContent, 'utf8', function (err) {
     if (err) {
         return console.log(err);
     }
