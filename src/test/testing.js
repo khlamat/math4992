@@ -9,8 +9,8 @@ for(let i = 0; i < testCases.length; i++){
     results[i].manHattan = solver(testCases[i], 'manHattan');
     results[i].linearConflict = solver(testCases[i], 'linearConflict');
     results[i].closureConflict = solver(testCases[i], 'closureConflict');
-    results[i].mixConflict = solver(testCases[i], 'mixConflict');
-    results[i].combineConflict = solver(testCases[i], 'combineConflict');
+    results[i].maxConflict = solver(testCases[i], 'maxConflict');
+    results[i].mergeConflict = solver(testCases[i], 'mergeConflict');
 }
 
 const jsonContent = JSON.stringify(results);
