@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { getMoveChoices, getXYCoord, selectNeighbour } from "./utility";
+import { getMoveChoices, getXYCoord, selectNeighbour } from "./utility.js";
 
 export const manhattanDist = (tiles) => {
   let boardSize = Math.sqrt(tiles.length);
@@ -84,11 +84,11 @@ export const closureConflict = (tiles) => {
   return manhattanDist(tiles) + closureCorrection(tiles);
 };
 
-export const mixConflict = (tiles) => {
+export const maxConflict = (tiles) => {
   return manhattanDist(tiles) + Math.max(closureCorrection(tiles), linearCorrection(tiles));
 };
 
-export const combineConflict = (tiles) => {
+export const mergeConflict = (tiles) => {
   let boardSize = Math.sqrt(tiles.length);
   let correction = 0;
   let noOfConflict = 0;

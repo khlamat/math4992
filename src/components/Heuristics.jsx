@@ -17,8 +17,8 @@ const Heuristics = ({ heuristic, setHeuristic }) => {
           <Option value="manHattan">ManHattan distance</Option>
           <Option value="linearConflict">Linear Conflict</Option>
           <Option value="closureConflict">Closure Conflict</Option>
-          <Option value="mixConflict">Mix Conflict</Option>
-          <Option value="combineConflict">Combine Conflict</Option>
+          <Option value="maxConflict">Max Conflict</Option>
+          <Option value="mergeConflict">Merge Conflict</Option>
         </Select>
       </Row>
     </>

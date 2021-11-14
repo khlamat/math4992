@@ -1,9 +1,8 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Col } from "antd";
 import _ from "lodash";
 import Tile from "./Tile.jsx";
 import { getMoveChoices, getXYCoord, selectNeighbour, swapElement } from "../solver/utility.js";
-import { useEffect } from "react/cjs/react.development";
 
 const Boards = ({ initialState, tiles, setTiles }) => {
   const squareLength = 80;

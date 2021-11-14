@@ -3,7 +3,7 @@ import {
   selectNeighbour,
   swapElement,
   moveReverse,
-} from "./utility";
+} from "./utility.js";
 import PriorityQueue from "js-priority-queue";
 import _ from "lodash";
 
@@ -31,19 +31,26 @@ const aStarAlgorithm = (tiles, heuristic) => {
   });
   let count = 0;
   while (stateQueue.length) {
-    if (count > 2000000) {
-      console.log('Over 2000000 iteration, stop the algorithm')
+    if (count > 5000000) {
+      console.log("Over 5000000 iteration, stop the algorithm");
       return {
-        // state,
-        children: [],
-        parent: null,
+        solution: [],
+        noOfIteration: Infinity,
+        pathLength: 0,
       };
     }
     count++;
     let lowest = stateQueue.dequeue();
     if (lowest.state.heuristicDist === 0) {
       console.log(`Number of Iteration: ${count}`);
-      return lowest;
+      let treeIterator = lowest;
+      let reversePath = [];
+      while (treeIterator.parent) {
+        reversePath.push(treeIterator.state.preDirection);
+        treeIterator = treeIterator.parent;
+      }
+      let solution = _.reverse(reversePath);
+      return {solution, noOfIteration: count, pathLength: solution.length,};
     } else {
       let newMoveStates = getAllNeighbourState(lowest.state, heuristic);
       lowest.children = _.map(newMoveStates, (state) => {

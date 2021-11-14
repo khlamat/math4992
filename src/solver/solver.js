@@ -1,5 +1,5 @@
-import aStarAlgorithm from "./aStarAlgorithm";
-import { linearConflict, manhattanDist, closureConflict, mixConflict, combineConflict } from "./heuristics";
+import aStarAlgorithm from "./aStarAlgorithm.js";
+import { linearConflict, manhattanDist, closureConflict, maxConflict, mergeConflict } from "./heuristics.js";
 
 const solver = (tiles, heuristic) => {
   switch(heuristic) {
@@ -9,10 +9,10 @@ const solver = (tiles, heuristic) => {
       return aStarAlgorithm(tiles, linearConflict);
     case 'closureConflict':
       return aStarAlgorithm(tiles, closureConflict);
-    case 'mixConflict':
-      return aStarAlgorithm(tiles, mixConflict);
-    case 'combineConflict':
-      return aStarAlgorithm(tiles, combineConflict);
+    case 'maxConflict':
+      return aStarAlgorithm(tiles, maxConflict);
+    case 'mergeConflict':
+      return aStarAlgorithm(tiles, mergeConflict);
     default:
       return aStarAlgorithm(tiles, manhattanDist);
   }

@@ -44,14 +44,7 @@ const GameBoard = () => {
   };
 
   const solveGame = () => {
-    let result = solver(tiles, heuristic);
-    let treeIterator = result;
-    let reversePath = [];
-    while (treeIterator.parent) {
-      reversePath.push(treeIterator.state.preDirection);
-      treeIterator = treeIterator.parent;
-    }
-    let solution = _.reverse(reversePath);
+    let { solution } = solver(tiles, heuristic);
     console.log(`Solution:`, solution);
     let emptyPos = 0;
     for (let i = 0; i < tiles.length; i++) {
@@ -63,17 +56,13 @@ const GameBoard = () => {
     let index = 0;
     let animation = setInterval(() => {
       if (index < solution.length) {
-        let newEmptyPos = selectNeighbour(
-          emptyPos,
-          solution[index],
-          boardSize
-        );
+        let newEmptyPos = selectNeighbour(emptyPos, solution[index], boardSize);
         newTiles = swapElement(newTiles, emptyPos, newEmptyPos);
         emptyPos = newEmptyPos;
         index++;
         setTiles(newTiles);
       } else {
-        clearInterval(animation)
+        clearInterval(animation);
       }
     }, 100);
   };
@@ -101,9 +90,9 @@ const GameBoard = () => {
               setHeuristic={setHeuristic}
             ></Heuristics>
           </Col>
-          <Col span={24}>  
+          <Col span={24}>
             <Button
-              style={{margin: '0 10px 10px 0'}}
+              style={{ margin: "0 10px 10px 0" }}
               onClick={() => {
                 setTiles(initialState);
               }}
@@ -119,13 +108,17 @@ const GameBoard = () => {
             </Button>
           </Col>
           <Col span={24}>
-            <Button style={{marginBottom: '10px'}} icon={<PlayCircleOutlined />} onClick={solveGame}>
+            <Button
+              style={{ marginBottom: "10px" }}
+              icon={<PlayCircleOutlined />}
+              onClick={solveGame}
+            >
               Start
             </Button>
           </Col>
         </Row>
       </Col>
-      <Col span={16} style={{backgroundColor: ''}}>
+      <Col span={16} style={{ backgroundColor: "" }}>
         <Row justify="start" gutter={[16, 16]}>
           <Col span={24} style={styles.GameBoardStyle}>
             <Boards
@@ -146,10 +139,10 @@ const styles = {
     // backgroundColor: 'rgb(153,51,255)'
   },
   controlPanel: {
-    marginLeft: '10px',
+    marginLeft: "10px",
     // backgroundColor: '#e98074',
     // borderStyle: 'solid',
     // borderWidth: '1px'
-  }
+  },
 };
 export default GameBoard;
