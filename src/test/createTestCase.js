@@ -2,7 +2,7 @@ import _ from "lodash";
 import { getMoveChoices, selectNeighbour } from "../solver/utility.js";
 import fs from 'fs';
 let boardSize = 4
-let noOfmoves = 300;
+let noOfmoves = 200;
 let testCases = []
 for (let testcase = 0; testcase < 100; testcase++){
   let initialTiles = _.range(boardSize * boardSize);
