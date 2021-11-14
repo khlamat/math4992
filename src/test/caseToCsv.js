@@ -33,14 +33,14 @@ let size = 4;
 data.forEach(testCases => {
   const workSheet = xlsx.utils.json_to_sheet(testCases);
   xlsx.utils.book_append_sheet(workBook, workSheet, `boardSize${size}`);
+  const result = xlsx.write(workBook, {
+    bookType: "csv",
+    type: "buffer",
+  });
+  
+  writeFile(`./testing${size}.csv`, result).catch((error) => {
+    console.log(error);
+  });
   size++;
 })
 
-const result = xlsx.write(workBook, {
-  bookType: "xlsx",
-  type: "buffer",
-});
-
-writeFile("./testing.xlsx", result).catch((error) => {
-  console.log(error);
-});
