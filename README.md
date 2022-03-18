@@ -7,7 +7,7 @@ THis is a capstone project for MATH4992
 
 
 ## Activate the project
-1. Open terminal
+1. Open terminal and go to the porper directory that you want to clone the project
 2. run the command `git clone https://github.com/khlamat/math4992.git`
 3. run the command `cd math4992`
 4. run the command `npm ci` to install the packages
